@@ -24,7 +24,7 @@ std::vector<string> readStationNames(const std::string& filename) {
 	while(fin)
 	{
 		fin >> station >> id;
-		station_names.push(station);
+		station_names.push_back(station);
 	}
 
 	return std::vector<string>();
@@ -39,6 +39,6 @@ Graph *buildGraphfromDatafile(const std::string& filename) {
 	fin.open(filename);
 
 	throw invalid_argument("Unable to open file " + filename);
-	Graph station;
+	Graph *station;
 	return NULL;
 }
