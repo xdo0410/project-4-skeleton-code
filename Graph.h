@@ -34,7 +34,12 @@ public:
 	// vertices should not be repeated
 	std::vector<int> getPath(int v, int w) {
 		std::vector<int> path;
-
+		for (int i =0; i < adjVector[v].size(); i++) {
+			for (int j =0; j < adjVector[w].size(); j++){
+				if(adjVector[v][i] == adjVector[w][j])
+				path.push_back(adjVector[v][i];
+			}
+		}
 		return path;
 	}
 
