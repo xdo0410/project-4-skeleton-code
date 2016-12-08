@@ -13,8 +13,20 @@ using namespace std;
 // return a vector of strings containing the stations names indexed by their identifiers
 // throw an exception if there was a problem opening or reading the file
 std::vector<string> readStationNames(const std::string& filename) {
+	ifstream fin;
+	fin.open(filename);
 
 	throw invalid_argument("Unable to open file " + filename);
+	int id;
+	string station;
+	std::vector<string>station_names;
+	
+	while(fin)
+	{
+		fin >> station >> id;
+		station_names.push(station);
+	}
+
 	return std::vector<string>();
 }
 
@@ -23,7 +35,10 @@ std::vector<string> readStationNames(const std::string& filename) {
 // return a graph representing these station links
 // throw an exception if there was a problem opening or reading the file
 Graph *buildGraphfromDatafile(const std::string& filename) {
+	ifstream fin;
+	fin.open(filename);
 
 	throw invalid_argument("Unable to open file " + filename);
+	Graph station;
 	return NULL;
 }
