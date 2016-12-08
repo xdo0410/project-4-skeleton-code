@@ -8,10 +8,7 @@ public:
 	Graph(const int n) {
 		this -> numberVertices = n;
 		adjVector = new std::vector<int>[numberVertices];
-		for (int i = 0; i < numberVertices; i++)
-			for (int j = 0; j< numberVertices; j++){
-			adjVector[i][j] = false;
-		}
+	
 	}
 
 	// TO DO
