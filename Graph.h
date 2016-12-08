@@ -24,9 +24,9 @@ public:
 	// return the set of vertices that are adjacent to v
 	std::vector<int> adjacentVertices(int v) {
 		std::vector<int> vertices;
-		for (int j = 0; j < capacity; j++) {
-                     if([v][j] == true)
-			     verticies.push(j+1);
+		for (int j = 0; j < numberVertices; j++) {
+            		if(adjVector[v][j] == true)
+			vertices.(j+1);
 		  }
 
 		return vertices;
