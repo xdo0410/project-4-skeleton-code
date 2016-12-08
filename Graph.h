@@ -26,7 +26,7 @@ public:
 		std::vector<int> vertices;
 		for (int j = 0; j < numberVertices; j++) {
             		if(adjVector[v][j] == true)
-			vertices.push(j+1);
+			vertices.push_back(j+1);
 		  }
 
 		return vertices;
