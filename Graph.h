@@ -8,11 +8,7 @@ public:
 	// TO DO
 	// initialize an undirected graph that can store at most n vertices
 	//Graph(const int n) {
-	Graph() {
-		//this->numberVertices = n;
-		//adjVector = new std::vector<int>[numberVertices];
-
-	}
+	Graph() {}
 
 	// TO DO
 	// insert an edge between vertices u and v
@@ -51,7 +47,6 @@ private:
 	// TO DO
 	// member variables and functions to implement the public member functions
 	int numberVertices;
-	//std::vector<int> *adjVector;
 	std::vector<std::vector<int>> adjVector;
 
 	vector<bool> isVisited;
