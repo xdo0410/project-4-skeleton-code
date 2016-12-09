@@ -6,9 +6,7 @@ class Graph {
 public:
 	// TO DO
 	// initialize an undirected graph that can store at most n vertices
-	Graph(const int n) {
-		this -> numberVertices = n;
-	}
+	Graph() {}
 
 	// TO DO
 	// insert an edge between vertices u and v
