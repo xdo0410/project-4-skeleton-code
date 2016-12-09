@@ -48,7 +48,7 @@ public:
 	int BFS(int v, int w){ // source and destination, returns the length of the shortest path between src and dest if reachable, otherwise returns -1
 		std::vector <bool> visited;
 		
-		queue<int>q;
+		std::queue<int>q;
 		int level=0,nextLevelNodes=0,curLevelNodes=1;
 		q.push(v); visited[v]=true;
 
