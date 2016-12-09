@@ -1,12 +1,14 @@
 #pragma once
 #include <vector>
-#include <stdexcept>
+
 
 class Graph {
 public:
 	// TO DO
 	// initialize an undirected graph that can store at most n vertices
-	Graph() {}
+	Graph(const int n) {
+		this -> numberVertices = n;
+	}
 
 	// TO DO
 	// insert an edge between vertices u and v
@@ -38,48 +40,26 @@ public:
 	// vertices should not be repeated
 	
 	std::vector<int> getPath(int v, int w) {
-		if ((v < 1) || (v > adjVector.size()))
-			throw invalid_argument("The param v is out of range.");
-
-		return buildPathTrail(v, w);
-	}
-	
-
-
-private:
-	// TO DO
-	// member variables and functions to implement the public member functions
-	int numberVertices;
-	std::vector<std::vector<int>> adjVector;
-	
-	std::vector<bool> isVisited;
-	std::vector<int> pathTrail;
-
-	std::vector<int> buildPathTrail(int startingSource, int target) {
-		// Initially, mark all the source vertices as not yet visited.
+		std::vector<int> getPath(int v, int w) {
 		isVisited.resize(adjVector.size());
 		for (int i = 0; i < adjVector.size(); i++) {
 			isVisited[i] = false;
 		} // for
 
-		// Reset pathTrail in case it was built from previously iteration.
-		pathTrail.clear();
-		bool isFoundPath = getToTarget(startingSource, target);
-		if (isFoundPath)
-			pathTrail.push_back(startingSource);
-		// TODO: maybe throw an exception if path is not found y checking the returned isFoundPath param.
+		path.clear();
 
-		// The path is built in reverse order, i.e. target back to starting point, because the nature of using vector<int>.
-		// We just need to reverse it for the program caller to work naturally.
+		bool isFoundPath = getToTarget(v, w);
+		if (isFoundPath)
+			path.push_back(v);
+
+
 		std::vector<int> pathTrailToReturn;
-		for (auto rit = pathTrail.crbegin(); rit != pathTrail.crend(); ++rit)
+		for (auto rit = path.crbegin(); rit != path.crend(); ++rit)
 			pathTrailToReturn.push_back(*rit);
 
 		return pathTrailToReturn;
 	}
 
-	// This function resursively trying to find the first path by travel from the source to target by visiting 
-	// every adjacent nodes and their adjacent ones until hitting the target.
 	bool getToTarget(int source, int target) {
 		bool targetFound = false;
 		isVisited[source] = true;
@@ -94,7 +74,7 @@ private:
 					if (targetFound) {
 						// Only add to the trail path if not already there.
 						if (!isAlreadyInTrailPath(nextSourceToVisit))
-							pathTrail.push_back(nextSourceToVisit);
+							path.push_back(nextSourceToVisit);
 						break; // Found the path to target so no need to continue. Exit immediately.
 					} // if						
 				} // if
@@ -104,10 +84,22 @@ private:
 	}
 
 	bool isAlreadyInTrailPath(int source) {
-		for (int i = 0; i < pathTrail.size(); i++) {
-			if (pathTrail[i] == source)
+		for (int i = 0; i < path.size(); i++) {
+			if (path[i] == source)
 				return true;
 		} // for
 		return false;
 	}
+	
+
+
+private:
+	// TO DO
+	// member variables and functions to implement the public member functions
+	int numberVertices;
+	std::vector<std::vector<int>> adjVector;
+	
+	std::vector<bool> isVisited;
+	std::vector<int> path;
+	
 };
