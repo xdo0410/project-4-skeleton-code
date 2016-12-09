@@ -39,7 +39,7 @@ public:
 		for (int i = 1; i <= numberVertices; i++)
 			visited[i] = false;
 
-		queue<int> queue;
+		std::queue<int> queue;
 		queue.push(s);
 		visited[s] = true;
 
