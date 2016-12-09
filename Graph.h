@@ -34,29 +34,12 @@ public:
 	// return a list of vertices that appear between v and w, starting with v and ending with w
 	// vertices should not be repeated
 	
-	void BFS(int s) {
-		std::vector<bool> visited(numberVertices+1);
-		for (int i = 1; i <= numberVertices; i++)
-			visited[i] = false;
-
-		std::queue<int> queue;
-		queue.push(s);
+	void dfs(int s) {
+		std::vector <bool> visited;
 		visited[s] = true;
-
-		while(!queue.empty())
-		{
-			s = queue.front();
-			queue.pop();
-			
-
-			for (auto w = adjVector[s].cbegin(); w != adjVector[s].cend(); ++w)
-				if (!visited[*w])
-				{
-					visited[*w] = true;
-					queue.push(*w);
-				}
-		}
-
+		for (int i = 0; i < adjVector[s].size(); i++)
+			if (!visited[adjVector[s][i]])
+				dfs(adjVector[s][i]);
 	}
 	
 	std::vector<int> getPath(int v, int w) {
