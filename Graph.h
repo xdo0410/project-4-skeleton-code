@@ -34,7 +34,7 @@ public:
 	// return a list of vertices that appear between v and w, starting with v and ending with w
 	// vertices should not be repeated
 	
-		std::vector<int> getPath(int w) {
+		std::vector<int> getPath(int v, int w) {
 		std::vector<int> path;
 		int cur = w;
 		while(cur!= -1){
