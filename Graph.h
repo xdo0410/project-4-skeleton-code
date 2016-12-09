@@ -39,7 +39,7 @@ public:
 	
 	std::vector<int> getPath(int v, int w) {
 		if ((v < 1) || (v > adjVector.size()))
-			throw out_of_range("The param v is out of range.");
+			throw invalid_argument("The param v is out of range.");
 
 		return buildPathTrail(v, w);
 	}
