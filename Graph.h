@@ -6,9 +6,7 @@ class Graph {
 public:
 	// TO DO
 	// initialize an undirected graph that can store at most n vertices
-	Graph(const int n) {
-		Graph() {}
-	}
+	Graph() {}
 
 	// TO DO
 	// insert an edge between vertices u and v
@@ -54,10 +52,10 @@ private:
 	int numberVertices;
 	std::vector<std::vector<int>> adjVector;
 	
-	vector<bool> isVisited;
-	vector<int> pathTrail;
+	std::vector<bool> isVisited;
+	std::vector<int> pathTrail;
 
-	vector<int> buildPathTrail(int startingSource, int target) {
+	std::vector<int> buildPathTrail(int startingSource, int target) {
 		// Initially, mark all the source vertices as not yet visited.
 		isVisited.resize(adjVector.size());
 		for (int i = 0; i < adjVector.size(); i++) {
@@ -73,7 +71,7 @@ private:
 
 		// The path is built in reverse order, i.e. target back to starting point, because the nature of using vector<int>.
 		// We just need to reverse it for the program caller to work naturally.
-		vector<int> pathTrailToReturn;
+		std::vector<int> pathTrailToReturn;
 		for (auto rit = pathTrail.crbegin(); rit != pathTrail.crend(); ++rit)
 			pathTrailToReturn.push_back(*rit);
 
@@ -112,6 +110,4 @@ private:
 		} // for
 		return false;
 	}
-};
-	
 };
