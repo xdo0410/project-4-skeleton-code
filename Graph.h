@@ -34,51 +34,53 @@ public:
 	// return a list of vertices that appear between v and w, starting with v and ending with w
 	// vertices should not be repeated
 
-	int BFS(int v, int w){ // source and destination, returns the length of the shortest path between src and dest if reachable, otherwise returns -1
-		std::vector <bool> visited;
-		
-		std::queue<int>q;
-		int level=0,nextLevelNodes=0,curLevelNodes=1;
-		q.push(v); visited[v]=true;
+	bool getPath(int v, int w) {
 
-		while(!q.empty()){
-			int cur = q.front(); q.pop();
-			curLevelNodes--;
-			for(int i = 0 ; i < adjVector[cur].size();i++){
-				if(!visited[adjVector[cur][i]]){
-				q.push(adjVector[cur][i]);
-				from[adjVector[cur][i]]=cur;
-				visited[adjVector[cur][i]]=true;
-				nextLevelNodes++;
-				if(adjVector[cur][i]==w) 
-					return level+1;
-       }
-     }
-
-			if(!curLevelNodes){
-			curLevelNodes=nextLevelNodes;
-			nextLevelNodes=0;
-			level++;
-			}
-		}
-		return -1;
-	}
-
-	std::vector<int> getPath(int v, int w) {
-		std::vector<int> path;
-		int cur = w;
-		for (int i =0; i < adjVector[v].size(); i++) {
-			for (int j =0; j < adjVector[w].size(); j++){
-				if(adjVector[v][i] == adjVector[w][j])
-				path.push_back(adjVector[v][i]);
-				adjVector[cur][i] = from[cur];
-				
-			}
-		}
-
-		return path;
-	}
-	
+    // Base case
+    if (v == w)
+        return true;
+ 
+    // Mark all the vertices as not visited
+    bool *visited = new bool[numberVertices];
+    for (int i = 0; i < numberVertices; i++)
+        visited[i] = false;
+ 
+    // Create a queue for BFS
+    std::queue<int> queue;
+ 
+    // Mark the current node as visited and enqueue it
+    visited[v] = true;
+    queue.push(v);
+ 
+    // it will be used to get all adjacent vertices of a vertex
+    std::vector<int>::iterator i;
+ 
+    while (!queue.empty())
+    {
+        // Dequeue a vertex from queue and print it
+        v = queue.front();
+        queue.pop();
+ 
+        // Get all adjacent vertices of the dequeued vertex s
+        // If a adjacent has not been visited, then mark it visited
+        // and enqueue it
+        for (i = adjVector[v].begin(); i != adjVector[v].end(); ++i)
+        {
+            // If this adjacent node is the destination node, then return true
+            if (*i == w)
+                return true;
+ 
+            // Else, continue to do BFS
+            if (!visited[*i])
+            {
+                visited[*i] = true;
+                queue.push(*i);
+            }
+        }
+    }
+ 
+    return false;
+}
 
 private:
 	// TO DO
