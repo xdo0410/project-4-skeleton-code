@@ -15,8 +15,10 @@ using namespace std;
 std::vector<string> readStationNames(const std::string& filename) {
 	ifstream fin;
 	fin.open(filename);
-
-	throw invalid_argument("Unable to open file " + filename);
+	
+	if(!fin.is_open())
+		throw invalid_argument("Unable to open file " + filename);
+	
 	int id;
 	string station;
 	std::vector<string>station_names;
@@ -26,7 +28,8 @@ std::vector<string> readStationNames(const std::string& filename) {
 		fin >> station >> id;
 		station_names.push_back(station);
 	}
-
+	fin.close();
+	
 	return std::vector<string>();
 }
 
@@ -37,8 +40,11 @@ std::vector<string> readStationNames(const std::string& filename) {
 Graph *buildGraphfromDatafile(const std::string& filename) {
 	ifstream fin;
 	fin.open(filename);
-
-	throw invalid_argument("Unable to open file " + filename);
+	
+	if(!fin.is_open())
+		throw invalid_argument("Unable to open file " + filename);
 	Graph *station;
+	fin.close();
+	
 	return NULL;
 }
