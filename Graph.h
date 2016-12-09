@@ -71,7 +71,7 @@ public:
 			for (int j =0; j < adjVector[w].size(); j++){
 				if(adjVector[v][i] == adjVector[w][j])
 				path.push_back(adjVector[v][i]);
-				adjVector[cur][i] = from[cur][j];
+				adjVector[cur][i] = from[cur];
 				
 			}
 		}
