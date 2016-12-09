@@ -33,17 +33,6 @@ public:
 	// TO DO
 	// return a list of vertices that appear between v and w, starting with v and ending with w
 	// vertices should not be repeated
-	
-		std::vector<int> getPath(int v, int w) {
-		std::vector<int> path;
-		int cur = w;
-		while(cur!= -1){
-			path.push_back(cur);
-			cur = from[cur];	
-		}
-
-		return path;
-	}
 
 	int BFS(int v, int w){ // source and destination, returns the length of the shortest path between src and dest if reachable, otherwise returns -1
 		std::vector <bool> visited;
@@ -75,6 +64,20 @@ public:
 		return -1;
 	}
 
+	std::vector<int> getPath(int v, int w) {
+		std::vector<int> path;
+		int cur = w;
+		for (int i =0; i < adjVector[v].size(); i++) {
+			for (int j =0; j < adjVector[w].size(); j++){
+				if(adjVector[v][i] == adjVector[w][j])
+				path.push_back(adjVector[v][i]);
+				adjVector[cur][i] = from[cur][j];
+				
+			}
+		}
+
+		return path;
+	}
 	
 
 private:
