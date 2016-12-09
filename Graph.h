@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-
+#include <stdexcept>
 
 class Graph {
 public:
