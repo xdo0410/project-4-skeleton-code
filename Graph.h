@@ -7,15 +7,20 @@ public:
 	// TO DO
 	// initialize an undirected graph that can store at most n vertices
 	Graph(const int n) {
-		this -> numberVertices = n;
-		adjVector = new std::vector<int>[numberVertices];
-	
+		Graph() {}
 	}
 
 	// TO DO
 	// insert an edge between vertices u and v
 	void insertEdge(int u, int v) {
+		if (u >= adjVector.size()) {
+			adjVector.resize(u+1);
+		}
+		if (v >= adjVector.size()) {
+			adjVector.resize(v + 1);
+		}
 		adjVector[u].push_back(v);
+		adjVector[v].push_back(u);
 	}
 
 	// TO DO
@@ -33,49 +38,12 @@ public:
 	// TO DO
 	// return a list of vertices that appear between v and w, starting with v and ending with w
 	// vertices should not be repeated
-
-	int BFS(int v, int w){
-		std::vector <bool> visited;
-		
-		std::queue<int>q;
-		int level=0,nextLevelNodes=0,curLevelNodes=1;
-		q.push(v); visited[v]=true;
-		
-		 while(!q.empty()){
-     			int cur = q.front(); q.pop();
-			curLevelNodes--;
-     			for(int i = 0 ; i < adjVector[cur].size();i++){
-       				if(!visited[adjVector[cur][i]]){
-         				q.push(adjVector[cur][i]);
-					from[adjVector[cur][i]]=cur;
-         				visited[adjVector[cur][i]]=true;
-         				nextLevelNodes++;
-					
-         				if(adjVector[cur][i]==w) 
-						return level+1;
-       				}
-    	 		}
-    	 	if(!curLevelNodes){
-       			curLevelNodes=nextLevelNodes;
-       			nextLevelNodes=0;
-       			level++;
-     			}
-   		}
-   		return -1;
- 	}
+	
 	std::vector<int> getPath(int v, int w) {
-		std::vector<int> path;
-		int cur = w;
-		for (int i =0; i < adjVector[v].size(); i++) {
-			for (int j =0; j < adjVector[w].size(); j++){
-				if(adjVector[v][i] == adjVector[w][j])
-				path.push_back(adjVector[v][i]);
-				adjVector[cur][i] = from[cur];
-				
-			}
-		}
+		if ((v < 1) || (v > adjVector.size()))
+			throw invalid_argument("The param v is out of range.");
 
-		return path;
+		return buildPathTrail(v, w);
 	}
 	
 
@@ -84,6 +52,66 @@ private:
 	// TO DO
 	// member variables and functions to implement the public member functions
 	int numberVertices;
-	std::vector<int> *adjVector;
-	std::vector<int> from;
+	std::vector<std::vector<int>> adjVector;
+	
+	vector<bool> isVisited;
+	vector<int> pathTrail;
+
+	vector<int> buildPathTrail(int startingSource, int target) {
+		// Initially, mark all the source vertices as not yet visited.
+		isVisited.resize(adjVector.size());
+		for (int i = 0; i < adjVector.size(); i++) {
+			isVisited[i] = false;
+		} // for
+
+		// Reset pathTrail in case it was built from previously iteration.
+		pathTrail.clear();
+		bool isFoundPath = getToTarget(startingSource, target);
+		if (isFoundPath)
+			pathTrail.push_back(startingSource);
+		// TODO: maybe throw an exception if path is not found y checking the returned isFoundPath param.
+
+		// The path is built in reverse order, i.e. target back to starting point, because the nature of using vector<int>.
+		// We just need to reverse it for the program caller to work naturally.
+		vector<int> pathTrailToReturn;
+		for (auto rit = pathTrail.crbegin(); rit != pathTrail.crend(); ++rit)
+			pathTrailToReturn.push_back(*rit);
+
+		return pathTrailToReturn;
+	}
+
+	// This function resursively trying to find the first path by travel from the source to target by visiting 
+	// every adjacent nodes and their adjacent ones until hitting the target.
+	bool getToTarget(int source, int target) {
+		bool targetFound = false;
+		isVisited[source] = true;
+		if (source == target) {
+			targetFound = true;
+		}
+		else {
+			for (int i = 0; i < adjVector[source].size(); i++) {
+				int nextSourceToVisit = adjVector[source][i];
+				if (!isVisited[nextSourceToVisit]) {
+					targetFound = getToTarget(nextSourceToVisit, target);
+					if (targetFound) {
+						// Only add to the trail path if not already there.
+						if (!isAlreadyInTrailPath(nextSourceToVisit))
+							pathTrail.push_back(nextSourceToVisit);
+						break; // Found the path to target so no need to continue. Exit immediately.
+					} // if						
+				} // if
+			} // for
+		} // else
+		return targetFound;
+	}
+
+	bool isAlreadyInTrailPath(int source) {
+		for (int i = 0; i < pathTrail.size(); i++) {
+			if (pathTrail[i] == source)
+				return true;
+		} // for
+		return false;
+	}
+};
+	
 };
